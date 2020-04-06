@@ -10,4 +10,6 @@ public interface DepartmentRepository extends JpaRepository<Department, Long> {
     Page<Department> findByShortNameContaining(String shortName, Pageable pageable);
 
     Page<Department> findByFullNameContaining(String fullName, Pageable pageable);
+
+    Department findByShortName(String name);
 }

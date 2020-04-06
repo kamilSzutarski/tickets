@@ -1,5 +1,7 @@
 package com.wsb.tickets.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,13 +22,15 @@ public class TicketHeader extends Auditable<String> {
     @GeneratedValue
     private Long id;
 
+    @Column(unique = true)
     private String topic;
     private Integer priority;
 
-
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "ticketHeader")
     private List<TicketElement> elementList = new LinkedList<>();
 
+    @JsonBackReference
     @ManyToOne
     private Operator operator;
 

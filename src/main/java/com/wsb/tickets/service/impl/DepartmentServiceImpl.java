@@ -34,9 +34,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Department editDepartment(Department department) {
         return departmentRepository.findById(department.getId()).map(departmentDB -> {
-            if (!departmentDB.getShortName().equals(department.getShortName())) {
+            if (!departmentDB.getShortName().equals(department.getShortName())
+                    || (!departmentDB.getFullName().equals(department.getFullName()))) {
                 departmentDB.setShortName(department.getShortName());
-            } else if (!departmentDB.getFullName().equals(department.getFullName())) {
                 departmentDB.setFullName(department.getFullName());
             }
             return departmentRepository.save(departmentDB);

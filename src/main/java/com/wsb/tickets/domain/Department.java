@@ -1,5 +1,6 @@
 package com.wsb.tickets.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,6 +29,7 @@ public class Department {
     @Column(unique = true)
     private String fullName;
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "department")
     private List<Operator> operatorList = new LinkedList<>();
 

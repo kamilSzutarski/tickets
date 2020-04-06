@@ -26,7 +26,8 @@ public class TicketHeaderServiceImpl implements TicketHeaderService {
 
     @Override
     public TicketHeader save(TicketHeader ticketHeader) {
-        return null;
+        ticketHeader.setOperator(operatorRepository.findByLogin(ticketHeader.getOperator().getLogin()));
+        return ticketHeaderRepository.save(ticketHeader);
     }
 
     @Override
@@ -63,9 +64,9 @@ public class TicketHeaderServiceImpl implements TicketHeaderService {
     @Override
     public TicketHeader editTicketHeader(TicketHeader ticketHeader) {
         return ticketHeaderRepository.findById(ticketHeader.getId()).map(ticketDB -> {
-            if (!ticketDB.getPriority().equals(ticketHeader.getPriority())) {
+            if (!ticketDB.getPriority().equals(ticketHeader.getPriority())
+                    || (!ticketDB.getTopic().equals(ticketHeader.getTopic()))) {
                 ticketDB.setPriority(ticketHeader.getPriority());
-            } else if (!ticketDB.getTopic().equals(ticketHeader.getTopic())) {
                 ticketDB.setTopic(ticketHeader.getTopic());
             }
             return ticketHeaderRepository.save(ticketDB);

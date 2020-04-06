@@ -1,5 +1,7 @@
 package com.wsb.tickets.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,6 +40,7 @@ public class Operator extends Auditable<String> {
 
     private String company;
 
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "operator")
     private List<TicketHeader> ticketHeaders;
 
@@ -45,6 +48,7 @@ public class Operator extends Auditable<String> {
     @JoinTable
     private Set<Role> roles;
 
+    @JsonBackReference
     @ManyToOne
     private Department department;
 

@@ -2,6 +2,7 @@ package com.wsb.tickets.service.impl;
 
 import com.wsb.tickets.domain.TicketElement;
 import com.wsb.tickets.repository.TicketElementRepository;
+import com.wsb.tickets.repository.TicketHeaderRepository;
 import com.wsb.tickets.service.TicketElementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,9 +17,13 @@ public class TicketElementServiceImpl implements TicketElementService {
     @Autowired
     TicketElementRepository ticketElementRepository;
 
+    @Autowired
+    TicketHeaderRepository ticketHeaderRepository;
+
     @Override
     public TicketElement save(TicketElement ticketElement) {
-        return null;
+        ticketElement.setTicketHeader(ticketHeaderRepository.findById(ticketElement.getTicketHeader().getId()).orElseThrow(() -> new EntityNotFoundException("Ticket Header not found")));
+        return ticketElementRepository.save(ticketElement);
     }
 
     @Override

@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/operator")
 public class OperatorController {
@@ -15,8 +17,8 @@ public class OperatorController {
     OperatorService operatorService;
 
     @PostMapping
-    public Operator saveOperator(@RequestBody Operator operator) {
-        return operatorService.save(operator);
+    public Operator saveOperator(@RequestBody @Valid Operator operator, @RequestParam String... roleList) {
+        return operatorService.save(operator, roleList);
     }
 
     @GetMapping("/id/{id}")

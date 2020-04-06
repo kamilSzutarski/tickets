@@ -1,7 +1,9 @@
 package com.wsb.tickets.service.impl;
 
 import com.wsb.tickets.domain.Operator;
+import com.wsb.tickets.repository.DepartmentRepository;
 import com.wsb.tickets.repository.OperatorRepository;
+import com.wsb.tickets.repository.RoleRepository;
 import com.wsb.tickets.service.OperatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Arrays;
 
 @Service
 public class OperatorServiceImpl implements OperatorService {
@@ -16,9 +19,17 @@ public class OperatorServiceImpl implements OperatorService {
     @Autowired
     OperatorRepository operatorRepository;
 
+    @Autowired
+    DepartmentRepository departmentRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
+
     @Override
     public Operator save(Operator operator, String... roleList) {
-        return null;
+        operator.setRoles(roleRepository.findByNameIn(Arrays.asList(roleList)));
+        operator.setDepartment(departmentRepository.findByShortName(operator.getDepartment().getShortName()));
+        return operatorRepository.save(operator);
     }
 
     @Override
@@ -60,11 +71,11 @@ public class OperatorServiceImpl implements OperatorService {
     @Override
     public Operator editOperator(Operator operator) {
         return operatorRepository.findById(operator.getId()).map(operatorDB -> {
-            if (!operatorDB.getName().equals(operator.getName())) {
+            if (!operatorDB.getName().equals(operator.getName())
+                    || (!operatorDB.getSurname().equals(operator.getSurname()))
+                    || (!operatorDB.getCompany().equals(operator.getCompany()))) {
                 operatorDB.setName(operator.getName());
-            } else if (!operatorDB.getSurname().equals(operator.getSurname())) {
                 operatorDB.setSurname(operator.getSurname());
-            } else if (!operatorDB.getCompany().equals(operator.getCompany())) {
                 operatorDB.setCompany(operator.getCompany());
             }
             return operatorRepository.save(operatorDB);

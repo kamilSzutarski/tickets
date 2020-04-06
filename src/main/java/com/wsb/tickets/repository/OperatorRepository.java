@@ -14,4 +14,6 @@ public interface OperatorRepository extends JpaRepository<Operator, Long> {
     Page<Operator> findByNameContaining(String name, Pageable pageable);
 
     Page<Operator> findBySurnameContaining(String surname, Pageable pageable);
+
+    Operator findByLogin(String name);
 }
