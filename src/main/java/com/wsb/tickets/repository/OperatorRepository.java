@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface OperatorRepository extends JpaRepository<Operator, Long> {
 
     Page<Operator> findByLoginContaining(String login, Pageable pageable);
@@ -15,5 +17,5 @@ public interface OperatorRepository extends JpaRepository<Operator, Long> {
 
     Page<Operator> findBySurnameContaining(String surname, Pageable pageable);
 
-    Operator findByLogin(String name);
+    Optional<Operator> findByLogin(String login);
 }

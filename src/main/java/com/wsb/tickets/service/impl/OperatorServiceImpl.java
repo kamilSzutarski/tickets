@@ -8,6 +8,7 @@ import com.wsb.tickets.service.OperatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -17,16 +18,20 @@ import java.util.Arrays;
 public class OperatorServiceImpl implements OperatorService {
 
     @Autowired
-    OperatorRepository operatorRepository;
+    private OperatorRepository operatorRepository;
 
     @Autowired
-    DepartmentRepository departmentRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    RoleRepository roleRepository;
+    private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public Operator save(Operator operator, String... roleList) {
+        operator.setPassword(passwordEncoder.encode(operator.getPassword()));
         operator.setRoles(roleRepository.findByNameIn(Arrays.asList(roleList)));
         operator.setDepartment(departmentRepository.findByShortName(operator.getDepartment().getShortName()));
         return operatorRepository.save(operator);

@@ -15,10 +15,10 @@ import javax.persistence.EntityNotFoundException;
 public class TicketElementServiceImpl implements TicketElementService {
 
     @Autowired
-    TicketElementRepository ticketElementRepository;
+    private TicketElementRepository ticketElementRepository;
 
     @Autowired
-    TicketHeaderRepository ticketHeaderRepository;
+    private TicketHeaderRepository ticketHeaderRepository;
 
     @Override
     public TicketElement save(TicketElement ticketElement) {

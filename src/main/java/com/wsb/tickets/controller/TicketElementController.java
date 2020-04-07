@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class TicketElementController {
 
     @Autowired
-    TicketElementService ticketElementService;
+    private TicketElementService ticketElementService;
 
     @PostMapping
     public TicketElement saveTicketElement(@RequestBody TicketElement ticketElement) {

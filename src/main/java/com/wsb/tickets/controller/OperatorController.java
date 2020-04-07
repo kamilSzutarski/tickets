@@ -14,7 +14,7 @@ import javax.validation.Valid;
 public class OperatorController {
 
     @Autowired
-    OperatorService operatorService;
+    private OperatorService operatorService;
 
     @PostMapping
     public Operator saveOperator(@RequestBody @Valid Operator operator, @RequestParam String... roleList) {
@@ -37,7 +37,7 @@ public class OperatorController {
         operatorService.removeOperator(id);
     }
 
-    @PutMapping
+    @PutMapping //upate
     public Operator editOperator(@RequestBody Operator operator) {
         return operatorService.editOperator(operator);
     }

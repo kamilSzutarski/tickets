@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class DepartmentController {
 
     @Autowired
-    DepartmentService departmentService;
+    private DepartmentService departmentService;
 
     @PostMapping
     public Department saveDepartment(@RequestBody Department department) {

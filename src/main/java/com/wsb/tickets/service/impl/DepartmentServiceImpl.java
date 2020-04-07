@@ -14,7 +14,7 @@ import javax.persistence.EntityNotFoundException;
 public class DepartmentServiceImpl implements DepartmentService {
 
     @Autowired
-    DepartmentRepository departmentRepository;
+    private DepartmentRepository departmentRepository;
 
     @Override
     public Department save(Department department) {

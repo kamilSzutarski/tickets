@@ -16,17 +16,17 @@ import javax.persistence.EntityNotFoundException;
 public class TicketHeaderServiceImpl implements TicketHeaderService {
 
     @Autowired
-    TicketHeaderRepository ticketHeaderRepository;
+    private TicketHeaderRepository ticketHeaderRepository;
 
     @Autowired
-    TicketElementRepository ticketElementRepository;
+    private TicketElementRepository ticketElementRepository;
 
     @Autowired
-    OperatorRepository operatorRepository;
+    private OperatorRepository operatorRepository;
 
     @Override
     public TicketHeader save(TicketHeader ticketHeader) {
-        ticketHeader.setOperator(operatorRepository.findByLogin(ticketHeader.getOperator().getLogin()));
+        ticketHeader.setOperator(operatorRepository.findByLogin(ticketHeader.getOperator().getLogin()).orElseThrow(() -> new EntityNotFoundException("Login not found")));
         return ticketHeaderRepository.save(ticketHeader);
     }
 
